@@ -239,8 +239,7 @@ st.write("The map was generated from sampling 50,000 coordinates from the US acc
 
 
 
-
-df.Start_Time = pd.to_datetime(df.Start_Time, format='%Y-%m-%d %H:%M:%S')
+df.Start_Time = pd.to_datetime(df.Start_Time, format='%Y-%m-%d %H:%M:%S', errors='coerce')
 
 weekday_df = df[df.Start_Time.dt.dayofweek < 5]
 weekend_df = df[df.Start_Time.dt.dayofweek >= 5]
@@ -283,7 +282,6 @@ def weekend_hist_selected():
 selected_weekend_hist = weekend_hist_selected()
 st.bar_chart(selected_weekend_hist, x=range(24))
 st.write("Our analysis shows that there is a relatively consistent frequency of accidents occurring throughout the day on weekends, with a noticeable increase in accident occurrences observed between 11am and 6pm.")
-
 
 
 
