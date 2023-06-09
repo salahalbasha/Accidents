@@ -240,17 +240,17 @@ st.write("The map was generated from sampling 50,000 coordinates from the US acc
 
 
 
-df.Start_Time = pd.to_datetime(df.Start_Time)
+df.Start_Time = pd.to_datetime(df.Start_Time, format='%Y-%m-%d %H:%M:%S')
 
 weekday_df = df[df.Start_Time.dt.dayofweek < 5]
 weekend_df = df[df.Start_Time.dt.dayofweek >= 5]
 
-weekday_hist = np.histogram(weekday_df.Start_Time.dt.hour, bins=24, range=(0,24))[0]
-weekend_hist = np.histogram(weekend_df.Start_Time.dt.hour, bins=24, range=(0,24))[0]
+weekday_hist = np.histogram(weekday_df.Start_Time.dt.hour, bins=24, range=(0, 24))[0]
+weekend_hist = np.histogram(weekend_df.Start_Time.dt.hour, bins=24, range=(0, 24))[0]
 
 st.subheader("Weekday Accidents by Hour")
 weekday_choice = st.selectbox("Select a weekday", ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Weekdays'])
-
+#@st.cache
 def weekday_hist_selected():
     if weekday_choice == 'Monday':
         return weekday_df[weekday_df.Start_Time.dt.dayofweek == 0].Start_Time.dt.hour.value_counts().sort_index()
@@ -271,13 +271,13 @@ st.write("Our analysis suggests that a significant proportion of accidents occur
 
 st.subheader("Weekend Accidents by Hour")
 weekend_choice = st.selectbox("Select a weekend day", ['Saturday', 'Sunday', 'Weekend Days'])
-
+#@st.cache
 def weekend_hist_selected():
-     if weekend_choice == 'Saturday':
+    if weekend_choice == 'Saturday':
         return weekend_df[weekend_df.Start_Time.dt.dayofweek == 5].Start_Time.dt.hour.value_counts().sort_index()
-     elif weekend_choice == 'Sunday':
+    elif weekend_choice == 'Sunday':
         return weekend_df[weekend_df.Start_Time.dt.dayofweek == 6].Start_Time.dt.hour.value_counts().sort_index()
-     else:
+    else:
         return weekend_hist
 
 selected_weekend_hist = weekend_hist_selected()
