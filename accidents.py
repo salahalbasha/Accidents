@@ -13,23 +13,33 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pydeck as pdk
 
-data_filename = 'US_Accidents_Dec21_updated.pkl'
+import zipfile
+
+# Decompress the compressed files
+with zipfile.ZipFile('US_Accidents_Dec21_updated.csv.zip', 'r') as zip_ref:
+    zip_ref.extractall()
+
+with zipfile.ZipFile('US_Accidents_Dec21_updated.pkl.zip', 'r') as zip_ref:
+    zip_ref.extractall()
+
+# Load the decompressed files
+data_filename_csv = 'US_Accidents_Dec21_updated.csv'
+data_filename_pkl = 'US_Accidents_Dec21_updated.pkl'
 
 def load_data():
     # Check if the pickle file exists
-    if os.path.exists(data_filename):
+    if os.path.exists(data_filename_pkl):
         # Load data from pickle file if it exists
-        return pd.read_pickle(data_filename)
+        return pd.read_pickle(data_filename_pkl)
     else:
         # Read the CSV file into a pandas DataFrame
-        df = pd.read_csv('US_Accidents_Dec21_updated.csv')
+        df = pd.read_csv(data_filename_csv)
         
         # Convert the DataFrame to a pickle file
-        df.to_pickle(data_filename)
+        df.to_pickle(data_filename_pkl)
         
         return df
 
-#@st.cache(allow_output_mutation=True)
 def load_cached_data():
     df = load_data()
     return df
