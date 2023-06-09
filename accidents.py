@@ -185,10 +185,6 @@ st.bar_chart(cities_by_accident[:11], x='City', y='Accidents')
 st.subheader("Heatmap of US Accident Incidents")
 st.write("Higher Layers Represent Increased Accident Density and Severity")
 #@st.cache()
-"""
-def fill_df_na(df):
-    return df.fillna(df.mean(axis=1))
-"""
 
 def fill_df_na(df):
     numeric_cols = df.select_dtypes(include=np.number)
@@ -254,7 +250,7 @@ weekend_hist = np.histogram(weekend_df.Start_Time.dt.hour, bins=24, range=(0,24)
 
 st.subheader("Weekday Accidents by Hour")
 weekday_choice = st.selectbox("Select a weekday", ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Weekdays'])
-#@st.cache
+
 def weekday_hist_selected():
     if weekday_choice == 'Monday':
         return weekday_df[weekday_df.Start_Time.dt.dayofweek == 0].Start_Time.dt.hour.value_counts().sort_index()
@@ -275,7 +271,7 @@ st.write("Our analysis suggests that a significant proportion of accidents occur
 
 st.subheader("Weekend Accidents by Hour")
 weekend_choice = st.selectbox("Select a weekend day", ['Saturday', 'Sunday', 'Weekend Days'])
-#@st.cache
+
 def weekend_hist_selected():
      if weekend_choice == 'Saturday':
         return weekend_df[weekend_df.Start_Time.dt.dayofweek == 5].Start_Time.dt.hour.value_counts().sort_index()
@@ -283,11 +279,10 @@ def weekend_hist_selected():
         return weekend_df[weekend_df.Start_Time.dt.dayofweek == 6].Start_Time.dt.hour.value_counts().sort_index()
      else:
         return weekend_hist
-        
-selected_weekdend_hist = weekend_hist_selected()
-st.bar_chart(weekend_hist_selected(), x=range(24))
-st.write("Our analysis shows that there is a relatively consistent frequency of accidents occurring throughout the day on weekends, with a noticeable increase in accident occurrences observed between 11am and 6pm.")
 
+selected_weekend_hist = weekend_hist_selected()
+st.bar_chart(selected_weekend_hist, x=range(24))
+st.write("Our analysis shows that there is a relatively consistent frequency of accidents occurring throughout the day on weekends, with a noticeable increase in accident occurrences observed between 11am and 6pm.")
 
 
 
