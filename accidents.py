@@ -185,8 +185,15 @@ st.bar_chart(cities_by_accident[:11], x='City', y='Accidents')
 st.subheader("Heatmap of US Accident Incidents")
 st.write("Higher Layers Represent Increased Accident Density and Severity")
 #@st.cache()
+"""
 def fill_df_na(df):
     return df.fillna(df.mean(axis=1))
+"""
+
+def fill_df_na(df):
+    numeric_cols = df.select_dtypes(include=np.number)
+    return df.fillna(numeric_cols.mean(axis=1))
+
 
 df = fill_df_na(df)
 
