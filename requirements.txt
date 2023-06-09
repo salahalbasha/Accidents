@@ -1,9 +1,8 @@
-streamlit==0.88.0
-folium==0.14.0
-pandas==1.3.0
-numpy==1.21.0
-matplotlib==3.4.2
-seaborn==0.11.1
-pydeck==0.6.2
-folium==0.14.0
-streamlit_folium
+streamlit
+folium
+pandas
+numpy
+matplotlib
+seaborn
+pydeck
+streamlit-folium
